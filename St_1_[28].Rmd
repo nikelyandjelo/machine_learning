@@ -1,0 +1,48 @@
+---
+title: "Lab 1 Team 28"
+output: html_notebook
+---
+The code below demonstrate our the ability to collect, work with,
+and clean a data set. 
+
+The first step is to read data.
+```{r}
+test_data <- read.table("Desktop/Lab_1_data/test/X_test.txt")
+train_data <- read.table("Desktop/Lab_1_data/train/X_train.txt")
+```
+In the second step we are merging the training data and the testing data. And print out the output below.
+```{r}
+combined_data <- rbind(train_data, test_data)
+combined_data
+```
+Third, we label the dataset created in step 1 with a descriptive variable (column names from the Features.txt file).
+```{r}
+features <- read.table("Desktop/Lab_1_data/features.txt")
+colnames(combined_data) <- features$V2
+features
+```
+Fourth, we extract only the measurements (columns) on the mean and standard deviation
+for each measurement from the data set created on step 1
+```{r}
+selected_columns <- grep("mean\\(\\)|std\\(\\)", features$V2)
+selected_data <- combined_data[, selected_columns]
+selected_data
+```
+Next, we merge the training labels data set and the testing labels data set.
+```{r}
+train_labels <- read.table("Desktop/Lab_1_data/train/y_train.txt")
+test_labels <- read.table("Desktop/Lab_1_data/test/y_test.txt")
+combined_labels <- rbind(train_labels, test_labels)
+combined_labels
+```
+Lastly, we use descriptive activity names to name the activities in the data set created in
+step 4 and merged the data set created in step 3 and the data
+set created in step 4.
+```{r}
+activity_labels <- c("WALKING", "WALKING_UPSTAIRS", "WALKING_DOWNSTAIRS", "SITTING", "STANDING", "LAYING")
+combined_labels$V1 <- factor(combined_labels$V1, levels = 1:6, labels = activity_labels)
+final_data <- cbind(selected_data, Activity = combined_labels$V1)
+final_data
+```
+
+
