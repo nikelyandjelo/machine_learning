@@ -1,0 +1,11 @@
+---
+title: "St_2_[28]"
+output: html_document
+date: "2024-03-15"
+---
+
+```{r}
+NEI <- readRDS("summarySCC_PM25.rds")
+SCC <- readRDS("Desktop/Lab_2_data/Source_Classification_Code.rds")
+```
+
